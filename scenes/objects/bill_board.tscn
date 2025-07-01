@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dekxtmn8qjlpf"]
+
+[ext_resource type="PackedScene" uid="uid://fxrhwuev2wwa" path="res://scenes/Container/item_container.tscn" id="1_ufs1y"]
+[ext_resource type="Script" uid="uid://dupkutarwpg1l" path="res://scenes/objects/bill_board.gd" id="2_enff3"]
+[ext_resource type="Texture2D" uid="uid://btf4a1d7e8tip" path="res://graphics/objects/Billboard.png" id="2_x5p4q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fa6os"]
+size = Vector2(26.651, 17.8395)
+
+[node name="BillBoard" instance=ExtResource("1_ufs1y")]
+script = ExtResource("2_enff3")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_x5p4q")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(1.00002, -4.5)
+rotation = -3.14159
+scale = Vector2(46.002, -3.08305)
+shape = SubResource("RectangleShape2D_fa6os")

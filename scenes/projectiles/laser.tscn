@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh7mil1brhoql"]
+
+[ext_resource type="Script" uid="uid://gc7vxecw4ux4" path="res://scenes/projectiles/laser.gd" id="1_e6ads"]
+[ext_resource type="Texture2D" uid="uid://cgji5ahfdpu36" path="res://graphics/projectiles/blue.png" id="1_rlgyd"]
+[ext_resource type="Texture2D" uid="uid://rg6ytu5k3go7" path="res://graphics/decals/white.png" id="3_cwxws"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6ads"]
+radius = 7.0
+height = 78.0
+
+[sub_resource type="Gradient" id="Gradient_uxcji"]
+offsets = PackedFloat32Array(0, 0.957983, 1)
+colors = PackedColorArray(0.188235, 1, 1, 1, 0.188235, 1, 1, 0.780392, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_w364t"]
+gradient = SubResource("Gradient_uxcji")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_avy1s"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(50, -30, 0)
+scale_min = 0.5
+color = Color(0.188235, 1, 1, 1)
+color_ramp = SubResource("GradientTexture1D_w364t")
+turbulence_noise_strength = 4.29
+
+[node name="Laser" type="Area2D"]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_e6ads")
+speed = 2000
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rlgyd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -42)
+shape = SubResource("CapsuleShape2D_e6ads")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 32
+texture = ExtResource("3_cwxws")
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_avy1s")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
